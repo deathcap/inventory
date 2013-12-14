@@ -6,10 +6,10 @@ class Inventory
     size = opts.size ? 10
     @array = new Array(size)
 
-Inventory::give = (itemStack) ->
-  for i in @array
-    if @array[i]? and @array[i].canStackWith(itemStack)
-      excess = @array[i].mergeWith itemStack
+  give: (itemStack) ->
+    for i in @array
+      if @array[i]? and @array[i].canStackWith(itemStack)
+        excess = @array[i].mergeWith itemStack
 
 class ItemStack
   constructor: (item, count, tags) ->
@@ -22,12 +22,15 @@ class ItemStack
     return false if itemStack.tags? or @tags # any tag data makes unstackable
     true
 
-  # Combine this item stack with another of the same type, returning count that didn't fit (excess)
-  mergeWith: (itemStack) ->
+  # Merge this stack with another, returning the merged stack and excess stack that didn't fit
+  merge: (itemStack) ->
     n = @count + itemStack.count
     stackSize = @item.maxStackSize()
-    @count = n % stackSize
-    n - @count
+
+    mergedStack = new ItemStack(@item, n % stackSize, @tags)
+    excessStack = new ItemStack(@item, n - mergedStack.count, @tags)
+
+    return [mergedStack, excessStack]
 
 class Item
   constructor: (opts) ->

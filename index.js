@@ -10,24 +10,24 @@
       this.array = new Array(size);
     }
 
+    Inventory.prototype.give = function(itemStack) {
+      var excess, i, _i, _len, _ref, _results;
+      _ref = this.array;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        i = _ref[_i];
+        if ((this.array[i] != null) && this.array[i].canStackWith(itemStack)) {
+          _results.push(excess = this.array[i].mergeWith(itemStack));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
     return Inventory;
 
   })();
-
-  Inventory.prototype.give = function(itemStack) {
-    var excess, i, _i, _len, _ref, _results;
-    _ref = this.array;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      i = _ref[_i];
-      if ((this.array[i] != null) && this.array[i].canStackWith(itemStack)) {
-        _results.push(excess = this.array[i].mergeWith(itemStack));
-      } else {
-        _results.push(void 0);
-      }
-    }
-    return _results;
-  };
 
   ItemStack = (function() {
     function ItemStack(item, count, tags) {
@@ -46,12 +46,13 @@
       return true;
     };
 
-    ItemStack.prototype.mergeWith = function(itemStack) {
-      var n, stackSize;
+    ItemStack.prototype.merge = function(itemStack) {
+      var excessStack, mergedStack, n, stackSize;
       n = this.count + itemStack.count;
       stackSize = this.item.maxStackSize();
-      this.count = n % stackSize;
-      return n - this.count;
+      mergedStack = new ItemStack(this.item, n % stackSize, this.tags);
+      excessStack = new ItemStack(this.item, n - mergedStack.count, this.tags);
+      return [mergedStack, excessStack];
     };
 
     return ItemStack;
