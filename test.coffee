@@ -1,22 +1,22 @@
 # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
 
 test = require 'tape'
-{Inventory, ItemStack, Item} = require './'
+{Inventory, ItemPile, Item} = require './'
 
-test 'ItemStack create default', (t) ->
-  a = new ItemStack('dirt')
+test 'ItemPile create default', (t) ->
+  a = new ItemPile('dirt')
   t.equal a.item, 'dirt'
   t.equal a.count, 1
   t.deepEqual a.tags, {}
   t.end()
 
-test 'ItemStack empty tags', (t) ->
-  a = new ItemStack('dirt', 1, {})
+test 'ItemPile empty tags', (t) ->
+  a = new ItemPile('dirt', 1, {})
   t.deepEqual a.tags, {}
   t.end()
 
-test 'ItemStack increase', (t) ->
-  a = new ItemStack('dirt', 1)
+test 'ItemPile increase', (t) ->
+  a = new ItemPile('dirt', 1)
   excess = a.increase(10)
   t.equal a.count, 11
   t.equal excess, 0
@@ -26,11 +26,11 @@ test 'ItemStack increase', (t) ->
   t.equal excess, 47 
   t.end()
 
-test 'ItemStack merge', (t) ->
-  a = new ItemStack('dirt', 1)
-  b = new ItemStack('dirt', 80)
+test 'ItemPile merge', (t) ->
+  a = new ItemPile('dirt', 1)
+  b = new ItemPile('dirt', 80)
 
-  excess = a.mergeStack(b)
+  excess = a.mergePile(b)
 
   t.equal(a.item, b.item)
   t.equal(a.count + b.count, 80 + 1)
@@ -40,9 +40,9 @@ test 'ItemStack merge', (t) ->
 
   t.end()
 
-test 'ItemStack split', (t) ->
-  a = new ItemStack('dirt', 64)
-  b = a.splitStack(32)
+test 'ItemPile split', (t) ->
+  a = new ItemPile('dirt', 64)
+  b = a.splitPile(32)
 
   t.equal(a.count, 32)
   t.equal(b.count, 32)
@@ -50,23 +50,23 @@ test 'ItemStack split', (t) ->
   t.equal(a.tags, b.tags)
   t.end()
 
-test 'ItemStack split bad', (t) ->
-  a = new ItemStack('dirt', 10)
-  b = a.splitStack(1000)
+test 'ItemPile split bad', (t) ->
+  a = new ItemPile('dirt', 10)
+  b = a.splitPile(1000)
   
   t.equal(b, false)
   t.equal(a.count, 10)  # unchanged
   t.end()
 
-test 'ItemStack matches', (t) ->
-  a = new ItemStack('dirt', 3)
-  b = new ItemStack('dirt', 4)
+test 'ItemPile matches', (t) ->
+  a = new ItemPile('dirt', 3)
+  b = new ItemPile('dirt', 4)
   
   t.equal(a.matchesType(b), true)
   t.equal(a.matchesTypeAndCount(b), false)
   t.equal(a.matchesAll(b), false)
 
-  c = new ItemStack('dirt', 4)
+  c = new ItemPile('dirt', 4)
   t.equal(b.matchesType(c), true)
   t.equal(b.matchesTypeAndCount(c), true)
   t.equal(b.matchesAll(c), true)
@@ -75,10 +75,10 @@ test 'ItemStack matches', (t) ->
   t.equal(c.matchesTypeAndCount(b), true)
   t.equal(c.matchesAll(b), true)
 
-  d = new ItemStack('magic', 1, {foo:-7})
-  e = new ItemStack('magic', 1, {foo:54})
-  f = new ItemStack('magic', 1, {foo:-7})
-  g = new ItemStack('magic', 2, {foo:-7})
+  d = new ItemPile('magic', 1, {foo:-7})
+  e = new ItemPile('magic', 1, {foo:54})
+  f = new ItemPile('magic', 1, {foo:-7})
+  g = new ItemPile('magic', 2, {foo:-7})
   t.equal(d.matchesType(d), true)
   t.equal(d.matchesTypeAndCount(e), true)
   t.equal(d.matchesAll(e), false)
@@ -87,25 +87,25 @@ test 'ItemStack matches', (t) ->
 
   t.end()
 
-test 'ItemStack toString', (t) ->
-  a = new ItemStack('dirt', 42)
+test 'ItemPile toString', (t) ->
+  a = new ItemPile('dirt', 42)
   console.log a.toString()
   t.equal(a+'', '42:dirt')
 
-  b = new ItemStack('magic', 1, {foo:-7})
+  b = new ItemPile('magic', 1, {foo:-7})
   console.log b.toString()
   t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
-test 'ItemStack fromString', (t) ->
-  a = ItemStack.fromString('24:dirt')
+test 'ItemPile fromString', (t) ->
+  a = ItemPile.fromString('24:dirt')
   console.log(a)
   t.equal(a.count, 24)
   t.equal(a.item, 'dirt')
   t.equal(a.hasTags(), false)
   t.end()
 
-test 'ItemStack fromString/toString roundtrip', (t) ->
+test 'ItemPile fromString/toString roundtrip', (t) ->
   strings = [
     '24:dirt'
     '48:dirt'
@@ -115,23 +115,23 @@ test 'ItemStack fromString/toString roundtrip', (t) ->
     '2:hmm {"foo":[],"bar":2}'
     ]
   for s in strings
-    b = ItemStack.fromString(s)
+    b = ItemPile.fromString(s)
     outStr = b+''
     t.equal(s, outStr)
     console.log("=",s, outStr)
   t.end()
 
-test 'ItemStack itemFromString', (t) ->
-  a = ItemStack.itemFromString('foo')
+test 'ItemPile itemFromString', (t) ->
+  a = ItemPile.itemFromString('foo')
   t.equals(a, 'foo')
 
-  b = ItemStack.itemFromString(undefined)
+  b = ItemPile.itemFromString(undefined)
   t.equal(b, '')
 
-  c = ItemStack.itemToString('bar')
+  c = ItemPile.itemToString('bar')
   t.equals(c, 'bar')
 
-  d = ItemStack.itemToString(ItemStack.itemFromString(null))
+  d = ItemPile.itemToString(ItemPile.itemFromString(null))
   t.equals(d, '')
   t.end()
 
@@ -163,7 +163,7 @@ test 'Inventory give', (t) ->
 
   for i in [0..16]
     #console.log "\n\n1. #{i}"
-    excess = inv.give new ItemStack('dirt', 42)
+    excess = inv.give new ItemPile('dirt', 42)
     #console.log 'excess',excess
     #console.log inv+''
     t.equal tabsToCommas(inv+''), expectedInvs[i]
@@ -178,7 +178,7 @@ test 'Inventory give', (t) ->
 test 'Inventory give large', (t) ->
   inv = new Inventory()
 
-  inv.give new ItemStack('dirt', 200)
+  inv.give new ItemPile('dirt', 200)
   console.log(inv+'')
 
   t.equal tabsToCommas(inv+''), '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
@@ -187,11 +187,11 @@ test 'Inventory give large', (t) ->
 test 'Inventory take', (t) ->
   inv = new Inventory()
 
-  inv.give new ItemStack('dirt', 200)
-  inv.take new ItemStack('dirt', 1)
+  inv.give new ItemPile('dirt', 200)
+  inv.take new ItemPile('dirt', 1)
   t.equal tabsToCommas(inv+''), '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
 
-  inv.take new ItemStack('dirt', 100)
+  inv.take new ItemPile('dirt', 100)
   console.log(inv+'')
   t.equal tabsToCommas(inv+''), ',27:dirt,64:dirt,8:dirt,,,,,,'
 
