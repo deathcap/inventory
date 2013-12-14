@@ -67,4 +67,12 @@
     return t.end();
   });
 
+  test('ItemStack toString', function(t) {
+    var a;
+    a = new ItemStack('dirt', 42);
+    console.log(a.toString());
+    t.equal(a + "", 'dirt x 42 undefined');
+    return t.end();
+  });
+
 }).call(this);

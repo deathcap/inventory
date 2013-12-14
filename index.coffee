@@ -63,6 +63,9 @@ class ItemStack
 
     return new ItemStack(@item, n, @tags)
 
+  toString: () ->
+    "#{@item} x #{@count} #{@tags}"
+
 class Item
   constructor: (opts) ->
     for k, v of opts

@@ -58,3 +58,8 @@ test 'ItemStack split bad', (t) ->
   t.equal(a.count, 10)  # unchanged
   t.end()
 
+test 'ItemStack toString', (t) ->
+  a = new ItemStack('dirt', 42)
+  console.log a.toString()
+  t.equal(a+"", 'dirt x 42 undefined')
+  t.end()

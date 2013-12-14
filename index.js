@@ -87,6 +87,10 @@
       return new ItemStack(this.item, n, this.tags);
     };
 
+    ItemStack.prototype.toString = function() {
+      return "" + this.item + " x " + this.count + " " + this.tags;
+    };
+
     return ItemStack;
 
   })();
