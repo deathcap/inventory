@@ -31,17 +31,22 @@ class ItemStack
 
     @maxStackSize = 64
 
+  # can this stack be merged with another?
   canStackWith: (itemStack) ->
     return false if itemStack.item != @item
     return false if itemStack.tags? or @tags # any tag data makes unstackable
     true
 
+  # combine two stacks if possible, alterning both this and argument stack
+  # returns count of items that didn't fit
   mergeStack: (itemStack) ->
     return false if not @canStackWith(itemStack)
+    itemStack.count = @increase(itemStack.count)
 
-    [newCount, excessCount] = @tryAdding(itemStack.count)
+  # increase count by argument, returning number of items that didn't fit
+  increase: (n) ->
+    [newCount, excessCount] = @tryAdding(n)
     @count = newCount
-    itemStack.count = excessCount
     return excessCount
 
   # try combining count of items up to max stack size, returns [newCount, excessCount]

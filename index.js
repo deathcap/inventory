@@ -56,13 +56,16 @@
     };
 
     ItemStack.prototype.mergeStack = function(itemStack) {
-      var excessCount, newCount, _ref;
       if (!this.canStackWith(itemStack)) {
         return false;
       }
-      _ref = this.tryAdding(itemStack.count), newCount = _ref[0], excessCount = _ref[1];
+      return itemStack.count = this.increase(itemStack.count);
+    };
+
+    ItemStack.prototype.increase = function(n) {
+      var excessCount, newCount, _ref;
+      _ref = this.tryAdding(n), newCount = _ref[0], excessCount = _ref[1];
       this.count = newCount;
-      itemStack.count = excessCount;
       return excessCount;
     };
 

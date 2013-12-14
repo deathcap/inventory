@@ -22,6 +22,18 @@
     return t.end();
   });
 
+  test('ItemStack increase', function(t) {
+    var a, excess;
+    a = new ItemStack('dirt', 1);
+    excess = a.increase(10);
+    t.equal(a.count, 11);
+    t.equal(excess, 0);
+    excess = a.increase(100);
+    t.equal(a.count, 64);
+    t.equal(excess, 47);
+    return t.end();
+  });
+
   test('ItemStack merge', function(t) {
     var a, b, excess;
     a = new ItemStack('dirt', 1);
@@ -32,6 +44,26 @@
     t.equal(excess, b.count);
     t.equal(a.count, 64);
     t.equal(b.count, 17);
+    return t.end();
+  });
+
+  test('ItemStack split', function(t) {
+    var a, b;
+    a = new ItemStack('dirt', 64);
+    b = a.splitStack(32);
+    t.equal(a.count, 32);
+    t.equal(b.count, 32);
+    t.equal(a.item, b.item);
+    t.equal(a.tags, b.tags);
+    return t.end();
+  });
+
+  test('ItemStack split bad', function(t) {
+    var a, b;
+    a = new ItemStack('dirt', 10);
+    b = a.splitStack(1000);
+    t.equal(b, false);
+    t.equal(a.count, 10);
     return t.end();
   });
 
