@@ -81,13 +81,18 @@
   });
 
   test('Inventory', function(t) {
-    var excess, i, inv, _i;
+    var excess, expectedInvs, i, inv, _i;
     inv = new Inventory();
-    for (i = _i = 0; _i <= 15; i = ++_i) {
-      console.log("\n\n1. " + i);
+    expectedInvs = ['42:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,20:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,62:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,40:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,18:dirt,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,60:dirt,undefined,undefined,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,38:dirt,undefined,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,16:dirt,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,58:dirt,undefined,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,36:dirt,undefined,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,14:dirt,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,56:dirt,undefined,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,34:dirt,undefined', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,12:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,54:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt'];
+    for (i = _i = 0; _i <= 16; i = ++_i) {
       excess = inv.give(new ItemStack('dirt', 42));
-      console.log('excess', excess);
-      console.log(inv + "");
+      t.equal(inv + '', expectedInvs[i]);
+      if (i === 15) {
+        t.equal(excess, 32);
+      }
+      if (i === 16) {
+        t.equal(excess, 42);
+      }
     }
     return t.end();
   });
