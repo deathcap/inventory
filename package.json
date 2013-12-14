@@ -10,6 +10,7 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "itempile": "git://github.com/deathcap/inventory.git",
     "deep-equal": "~0.1.0"
   },
   "devDependencies": {
