@@ -114,6 +114,29 @@
     return t.end();
   });
 
+  test('ItemStack fromString', function(t) {
+    var a;
+    a = ItemStack.fromString('24:dirt');
+    console.log(a);
+    t.equal(a.count, 24);
+    t.equal(a.item, 'dirt');
+    t.equal(a.hasTags(), false);
+    return t.end();
+  });
+
+  test('ItemStack fromString/toString roundtrip', function(t) {
+    var b, outStr, s, strings, _i, _len;
+    strings = ['24:dirt', '48:dirt', '1000:dirt', '0:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}'];
+    for (_i = 0, _len = strings.length; _i < _len; _i++) {
+      s = strings[_i];
+      b = ItemStack.fromString(s);
+      outStr = b.toString();
+      t.equal(s, outStr);
+      console.log("=", s, outStr);
+    }
+    return t.end();
+  });
+
   test('Inventory give', function(t) {
     var excess, expectedInvs, i, inv, _i;
     inv = new Inventory();

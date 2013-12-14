@@ -120,6 +120,19 @@ class ItemStack
     else
       "#{@count}:#{@item}"
 
+  @fromString: (s) ->
+    a = s.match(/^([^:]+):([^ ]+) ?(.*)/) # assumptions: positive integral count, item name no spaces
+    return undefined if not a
+    [_, countStr, itemStr, tagsStr] = a
+    count = parseInt(countStr, 10)
+    item = itemStr  # TODO: item might be Item class?
+    if tagsStr && tagsStr.length
+      tags = JSON.parse(tagsStr)
+    else
+      tags = {}
+
+    return new ItemStack(item, count, tags)
+
 class Item
   constructor: (opts) ->
     for k, v of opts

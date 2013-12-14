@@ -172,6 +172,23 @@
       }
     };
 
+    ItemStack.fromString = function(s) {
+      var a, count, countStr, item, itemStr, tags, tagsStr, _;
+      a = s.match(/^([^:]+):([^ ]+) ?(.*)/);
+      if (!a) {
+        return void 0;
+      }
+      _ = a[0], countStr = a[1], itemStr = a[2], tagsStr = a[3];
+      count = parseInt(countStr, 10);
+      item = itemStr;
+      if (tagsStr && tagsStr.length) {
+        tags = JSON.parse(tagsStr);
+      } else {
+        tags = {};
+      }
+      return new ItemStack(item, count, tags);
+    };
+
     return ItemStack;
 
   })();

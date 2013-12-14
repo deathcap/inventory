@@ -97,6 +97,30 @@ test 'ItemStack toString', (t) ->
   t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
+test 'ItemStack fromString', (t) ->
+  a = ItemStack.fromString('24:dirt')
+  console.log(a)
+  t.equal(a.count, 24)
+  t.equal(a.item, 'dirt')
+  t.equal(a.hasTags(), false)
+  t.end()
+
+test 'ItemStack fromString/toString roundtrip', (t) ->
+  strings = [
+    '24:dirt'
+    '48:dirt'
+    '1000:dirt'
+    '0:dirt'
+    '1:foo {"tag":1}'
+    '2:hmm {"foo":[],"bar":2}'
+    ]
+  for s in strings
+    b = ItemStack.fromString(s)
+    outStr = b.toString()
+    t.equal(s, outStr)
+    console.log("=",s, outStr)
+  t.end()
+
 test 'Inventory give', (t) ->
   inv = new Inventory()
 
