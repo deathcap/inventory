@@ -27,14 +27,15 @@ class ItemStack
     @count = count ? 1
     @tags = tags ? {}
 
-    @tags = undefined if Object.keys(@tags).length == 0
-
     @maxStackSize = 64
+
+  hasTags: () ->
+    Object.keys(@tags).length != 0    # not "{}"
 
   # can this stack be merged with another?
   canStackWith: (itemStack) ->
     return false if itemStack.item != @item
-    return false if itemStack.tags? or @tags # any tag data makes unstackable
+    return false if itemStack.hasTags() or @hasTags() # any tag data makes unstackable
     true
 
   # combine two stacks if possible, alterning both this and argument stack
@@ -64,7 +65,7 @@ class ItemStack
     return new ItemStack(@item, n, @tags)
 
   toString: () ->
-    "#{@item} x #{@count} #{@tags}"
+    "#{@item} x #{@count} #{JSON.stringify @tags}"
 
 class Item
   constructor: (opts) ->

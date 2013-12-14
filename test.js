@@ -11,14 +11,14 @@
     a = new ItemStack('dirt');
     t.equal(a.item, 'dirt');
     t.equal(a.count, 1);
-    t.equal(a.tags, void 0);
+    t.deepEqual(a.tags, {});
     return t.end();
   });
 
   test('ItemStack empty tags', function(t) {
     var a;
     a = new ItemStack('dirt', 1, {});
-    t.equal(a.tags, void 0);
+    t.deepEqual(a.tags, {});
     return t.end();
   });
 
@@ -71,7 +71,7 @@
     var a;
     a = new ItemStack('dirt', 42);
     console.log(a.toString());
-    t.equal(a + "", 'dirt x 42 undefined');
+    t.equal(a + "", 'dirt x 42 {}');
     return t.end();
   });
 

@@ -7,12 +7,12 @@ test 'ItemStack create default', (t) ->
   a = new ItemStack('dirt')
   t.equal a.item, 'dirt'
   t.equal a.count, 1
-  t.equal a.tags, undefined
+  t.deepEqual a.tags, {}
   t.end()
 
 test 'ItemStack empty tags', (t) ->
   a = new ItemStack('dirt', 1, {})
-  t.equal a.tags, undefined  # not {}
+  t.deepEqual a.tags, {}
   t.end()
 
 test 'ItemStack increase', (t) ->
@@ -61,5 +61,5 @@ test 'ItemStack split bad', (t) ->
 test 'ItemStack toString', (t) ->
   a = new ItemStack('dirt', 42)
   console.log a.toString()
-  t.equal(a+"", 'dirt x 42 undefined')
+  t.equal(a+"", 'dirt x 42 {}')
   t.end()

@@ -39,17 +39,18 @@
       this.item = item;
       this.count = count != null ? count : 1;
       this.tags = tags != null ? tags : {};
-      if (Object.keys(this.tags).length === 0) {
-        this.tags = void 0;
-      }
       this.maxStackSize = 64;
     }
+
+    ItemStack.prototype.hasTags = function() {
+      return Object.keys(this.tags).length !== 0;
+    };
 
     ItemStack.prototype.canStackWith = function(itemStack) {
       if (itemStack.item !== this.item) {
         return false;
       }
-      if ((itemStack.tags != null) || this.tags) {
+      if (itemStack.hasTags() || this.hasTags()) {
         return false;
       }
       return true;
@@ -88,7 +89,7 @@
     };
 
     ItemStack.prototype.toString = function() {
-      return "" + this.item + " x " + this.count + " " + this.tags;
+      return "" + this.item + " x " + this.count + " " + (JSON.stringify(this.tags));
     };
 
     return ItemStack;
