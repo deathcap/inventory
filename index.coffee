@@ -47,6 +47,15 @@ class Inventory
   @fromString: (s) ->
     strings = s.split('\t') # literal tab not in JSON.stringify
     items = (ItemStack.fromString(s) for s in strings)
+    ret = new Inventory(items.length)
+    ret.array = items
+    ret
+
+  size: () ->
+    @array.length
+
+  slot: (i) ->
+    @array[i]
 
 class ItemStack
   constructor: (item, count, tags) ->

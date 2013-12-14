@@ -179,4 +179,15 @@
     return t.end();
   });
 
+  test('Inventory fromString', function(t) {
+    var inv;
+    inv = Inventory.fromString('\t10:dirt\t20:grass');
+    console.log(inv + '');
+    t.equals(inv.size(), 3);
+    t.equals(inv.slot(0), void 0);
+    t.equals(inv.slot(1) + '', '10:dirt');
+    t.equals(inv.slot(2) + '', '20:grass');
+    return t.end();
+  });
+
 }).call(this);

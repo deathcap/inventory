@@ -182,3 +182,12 @@ test 'Inventory take', (t) ->
   t.equal tabsToCommas(inv+''), ',27:dirt,64:dirt,8:dirt,,,,,,'
 
   t.end()
+
+test 'Inventory fromString', (t) ->
+  inv = Inventory.fromString('\t10:dirt\t20:grass')
+  console.log(inv+'')
+  t.equals(inv.size(), 3)
+  t.equals(inv.slot(0), undefined)
+  t.equals(inv.slot(1)+'', '10:dirt')
+  t.equals(inv.slot(2)+'', '20:grass')
+  t.end()

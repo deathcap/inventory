@@ -68,9 +68,9 @@
     };
 
     Inventory.fromString = function(s) {
-      var items, strings;
+      var items, ret, strings;
       strings = s.split('\t');
-      return items = (function() {
+      items = (function() {
         var _i, _len, _results;
         _results = [];
         for (_i = 0, _len = strings.length; _i < _len; _i++) {
@@ -79,6 +79,17 @@
         }
         return _results;
       })();
+      ret = new Inventory(items.length);
+      ret.array = items;
+      return ret;
+    };
+
+    Inventory.prototype.size = function() {
+      return this.array.length;
+    };
+
+    Inventory.prototype.slot = function(i) {
+      return this.array[i];
     };
 
     return Inventory;
