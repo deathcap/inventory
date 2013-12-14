@@ -68,17 +68,22 @@
   });
 
   test('ItemStack toString', function(t) {
-    var a;
+    var a, b;
     a = new ItemStack('dirt', 42);
     console.log(a.toString());
-    t.equal(a + "", 'dirt x 42 {}');
+    t.equal(a + '', '42:dirt');
+    b = new ItemStack('magic', 1, {
+      foo: -7
+    });
+    console.log(b.toString());
+    t.equal(b + '', '1:magic {"foo":-7}');
     return t.end();
   });
 
   test('Inventory', function(t) {
     var excess, i, inv, _i;
     inv = new Inventory();
-    for (i = _i = 0; _i <= 10; i = ++_i) {
+    for (i = _i = 0; _i <= 15; i = ++_i) {
       console.log("\n\n1. " + i);
       excess = inv.give(new ItemStack('dirt', 42));
       console.log('excess', excess);

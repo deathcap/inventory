@@ -61,13 +61,17 @@ test 'ItemStack split bad', (t) ->
 test 'ItemStack toString', (t) ->
   a = new ItemStack('dirt', 42)
   console.log a.toString()
-  t.equal(a+"", 'dirt x 42 {}')
+  t.equal(a+'', '42:dirt')
+
+  b = new ItemStack('magic', 1, {foo:-7})
+  console.log b.toString()
+  t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
 test 'Inventory', (t) ->
   inv = new Inventory()
 
-  for i in [0..10]
+  for i in [0..15]
     console.log "\n\n1. #{i}"
     excess = inv.give new ItemStack('dirt', 42)
     console.log 'excess',excess

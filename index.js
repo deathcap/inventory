@@ -33,14 +33,14 @@
     };
 
     Inventory.prototype.toString = function() {
-      var i, itemStack, s, _i, _len, _ref;
-      s = '';
+      var a, i, itemStack, _i, _len, _ref;
+      a = [];
       _ref = this.array;
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         itemStack = _ref[i];
-        s += "" + i + "=" + itemStack + "\n";
+        a.push("" + itemStack);
       }
-      return s;
+      return a.join(',');
     };
 
     return Inventory;
@@ -102,7 +102,11 @@
     };
 
     ItemStack.prototype.toString = function() {
-      return "" + this.item + " x " + this.count + " " + (JSON.stringify(this.tags));
+      if (this.hasTags()) {
+        return "" + this.count + ":" + this.item + " " + (JSON.stringify(this.tags));
+      } else {
+        return "" + this.count + ":" + this.item;
+      }
     };
 
     return ItemStack;

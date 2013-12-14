@@ -24,10 +24,10 @@ class Inventory
     return excess
 
   toString: () ->
-    s = ''
+    a = []
     for itemStack, i in @array
-      s += "#{i}=#{itemStack}\n"
-    s
+      a.push("#{itemStack}")
+    a.join(',')
 
 class ItemStack
   constructor: (item, count, tags) ->
@@ -73,7 +73,10 @@ class ItemStack
     return new ItemStack(@item, n, @tags)
 
   toString: () ->
-    "#{@item} x #{@count} #{JSON.stringify @tags}"
+    if @hasTags()
+      "#{@count}:#{@item} #{JSON.stringify @tags}"
+    else
+      "#{@count}:#{@item}"
 
 class Item
   constructor: (opts) ->
