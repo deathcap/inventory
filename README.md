@@ -1,0 +1,6 @@
+# inventory
+
+## License
+
+MIT
+

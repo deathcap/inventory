@@ -1,0 +1,11 @@
+{
+    "name": "inventory",
+    "description": "item inventory management",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:deathcap/inventory.git"
+    },
+    "dependencies": {
+    }
+}
