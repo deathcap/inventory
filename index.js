@@ -14,6 +14,7 @@
 
     Inventory.prototype.give = function(itemPile) {
       var excess, i, _i, _j, _ref, _ref1;
+      excess = itemPile.count;
       for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
         if ((this.array[i] != null) && this.array[i].canPileWith(itemPile)) {
           excess = this.array[i].mergePile(itemPile);

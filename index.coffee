@@ -10,6 +10,8 @@ class Inventory
     @array = new Array(size)
 
   give: (itemPile) ->
+    excess = itemPile.count
+
     # first add to existing piles
     for i in [0...@array.length]
       if @array[i]? and @array[i].canPileWith(itemPile)
