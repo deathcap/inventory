@@ -58,12 +58,12 @@ class Inventory
     @array[i]
 
 class ItemStack
+  @maxStackSize = 64
+
   constructor: (item, count, tags) ->
     @item = item
     @count = count ? 1
     @tags = tags ? {}
-
-    @maxStackSize = 64
 
   hasTags: () ->
     Object.keys(@tags).length != 0    # not "{}"
@@ -107,8 +107,8 @@ class ItemStack
   # try combining count of items up to max stack size, returns [newCount, excessCount]
   tryAdding: (n) ->
     sum = @count + n
-    if sum > @maxStackSize
-      return [@maxStackSize, sum - @maxStackSize] # overflowing stack
+    if sum > ItemStack.maxStackSize
+      return [ItemStack.maxStackSize, sum - ItemStack.maxStackSize] # overflowing stack
     else
       return [sum, 0] # added everything they wanted
 

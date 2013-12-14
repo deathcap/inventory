@@ -97,11 +97,12 @@
   })();
 
   ItemStack = (function() {
+    ItemStack.maxStackSize = 64;
+
     function ItemStack(item, count, tags) {
       this.item = item;
       this.count = count != null ? count : 1;
       this.tags = tags != null ? tags : {};
-      this.maxStackSize = 64;
     }
 
     ItemStack.prototype.hasTags = function() {
@@ -162,8 +163,8 @@
     ItemStack.prototype.tryAdding = function(n) {
       var sum;
       sum = this.count + n;
-      if (sum > this.maxStackSize) {
-        return [this.maxStackSize, sum - this.maxStackSize];
+      if (sum > ItemStack.maxStackSize) {
+        return [ItemStack.maxStackSize, sum - ItemStack.maxStackSize];
       } else {
         return [sum, 0];
       }
