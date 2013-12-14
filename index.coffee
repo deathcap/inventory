@@ -1,5 +1,7 @@
 # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
 
+deepEqual = require 'deep-equal'
+
 class Inventory
   constructor: (opts) ->
     opts = opts ? {}
@@ -42,6 +44,15 @@ class ItemStack
 
   hasTags: () ->
     Object.keys(@tags).length != 0    # not "{}"
+
+  matchesType: (itemStack) ->
+    @item == itemStack.item
+
+  matchesTypeAndCount: (itemStack) ->
+    @item == itemStack.item && @count == itemStack.count
+
+  matchesAll: (itemStack) ->
+    @matchesTypeAndCount(itemStack) && deepEqual(@tags, itemStack.tags, {strict:true})
 
   # can this stack be merged with another?
   canStackWith: (itemStack) ->

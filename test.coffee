@@ -58,6 +58,33 @@ test 'ItemStack split bad', (t) ->
   t.equal(a.count, 10)  # unchanged
   t.end()
 
+test 'ItemStack matches', (t) ->
+  a = new ItemStack('dirt', 3)
+  b = new ItemStack('dirt', 4)
+  
+  t.equal(a.matchesType(b), true)
+  t.equal(a.matchesTypeAndCount(b), false)
+  t.equal(a.matchesAll(b), false)
+
+  c = new ItemStack('dirt', 4)
+  t.equal(b.matchesType(c), true)
+  t.equal(b.matchesTypeAndCount(c), true)
+  t.equal(b.matchesAll(c), true)
+
+  t.equal(c.matchesType(b), true)
+  t.equal(c.matchesTypeAndCount(b), true)
+  t.equal(c.matchesAll(b), true)
+
+  d = new ItemStack('magic', 1, {foo:-7})
+  e = new ItemStack('magic', 1, {foo:54})
+  f = new ItemStack('magic', 1, {foo:-7})
+  t.equal(d.matchesType(d), true)
+  t.equal(d.matchesTypeAndCount(e), true)
+  t.equal(d.matchesAll(e), false)
+  t.equal(d.matchesAll(f), true)
+
+  t.end()
+
 test 'ItemStack toString', (t) ->
   a = new ItemStack('dirt', 42)
   console.log a.toString()
