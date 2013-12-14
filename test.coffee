@@ -72,23 +72,23 @@ test 'Inventory', (t) ->
   inv = new Inventory()
 
   expectedInvs = [
-    '42:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,20:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,62:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,40:dirt,undefined,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,18:dirt,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,60:dirt,undefined,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,38:dirt,undefined,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,16:dirt,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,58:dirt,undefined,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,36:dirt,undefined,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,14:dirt,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,56:dirt,undefined,undefined'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,34:dirt,undefined'
+    '42:dirt,,,,,,,,,'
+    '64:dirt,20:dirt,,,,,,,,'
+    '64:dirt,62:dirt,,,,,,,,'
+    '64:dirt,64:dirt,40:dirt,,,,,,,'
+    '64:dirt,64:dirt,64:dirt,18:dirt,,,,,,'
+    '64:dirt,64:dirt,64:dirt,60:dirt,,,,,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,38:dirt,,,,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,16:dirt,,,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,58:dirt,,,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,36:dirt,,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,14:dirt,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,56:dirt,,'
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,34:dirt,'
     '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,12:dirt'
     '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,54:dirt'
     '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt'
-    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt']
+    '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt']  # all filled up!
 
 
   for i in [0..16]
@@ -99,9 +99,9 @@ test 'Inventory', (t) ->
     t.equal inv+'', expectedInvs[i]
 
     if i == 15
-      t.equal excess, 32
+      t.equal excess, 32    # partially added
     if i == 16
-      t.equal excess, 42
+      t.equal excess, 42    # couldn't fit anything
 
   t.end()
 

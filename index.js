@@ -38,7 +38,11 @@
       _ref = this.array;
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         itemStack = _ref[i];
-        a.push("" + itemStack);
+        if (itemStack == null) {
+          a.push('');
+        } else {
+          a.push("" + itemStack);
+        }
       }
       return a.join(',');
     };

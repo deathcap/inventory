@@ -26,7 +26,10 @@ class Inventory
   toString: () ->
     a = []
     for itemStack, i in @array
-      a.push("#{itemStack}")
+      if not itemStack?
+        a.push('')
+      else
+        a.push("#{itemStack}")
     a.join(',')
 
 class ItemStack
