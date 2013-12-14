@@ -97,7 +97,7 @@ test 'ItemStack toString', (t) ->
   t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
-test 'Inventory', (t) ->
+test 'Inventory give', (t) ->
   inv = new Inventory()
 
   expectedInvs = [
@@ -134,3 +134,24 @@ test 'Inventory', (t) ->
 
   t.end()
 
+test 'Inventory give large', (t) ->
+  inv = new Inventory()
+
+  inv.give new ItemStack('dirt', 200)
+  console.log(inv+'')
+
+  t.equal inv+'', '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
+  t.end()
+
+test 'Inventory take', (t) ->
+  inv = new Inventory()
+
+  inv.give new ItemStack('dirt', 200)
+  inv.take new ItemStack('dirt', 1)
+  t.equal(inv+'', '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,')
+
+  inv.take new ItemStack('dirt', 100)
+  console.log(inv+'')
+  t.equal(inv+'', ',27:dirt,64:dirt,8:dirt,,,,,,')
+
+  t.end()

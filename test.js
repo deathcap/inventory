@@ -114,7 +114,7 @@
     return t.end();
   });
 
-  test('Inventory', function(t) {
+  test('Inventory give', function(t) {
     var excess, expectedInvs, i, inv, _i;
     inv = new Inventory();
     expectedInvs = ['42:dirt,,,,,,,,,', '64:dirt,20:dirt,,,,,,,,', '64:dirt,62:dirt,,,,,,,,', '64:dirt,64:dirt,40:dirt,,,,,,,', '64:dirt,64:dirt,64:dirt,18:dirt,,,,,,', '64:dirt,64:dirt,64:dirt,60:dirt,,,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,38:dirt,,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,16:dirt,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,58:dirt,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,36:dirt,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,14:dirt,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,56:dirt,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,34:dirt,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,12:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,54:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt'];
@@ -128,6 +128,27 @@
         t.equal(excess, 42);
       }
     }
+    return t.end();
+  });
+
+  test('Inventory give large', function(t) {
+    var inv;
+    inv = new Inventory();
+    inv.give(new ItemStack('dirt', 200));
+    console.log(inv + '');
+    t.equal(inv + '', '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,');
+    return t.end();
+  });
+
+  test('Inventory take', function(t) {
+    var inv;
+    inv = new Inventory();
+    inv.give(new ItemStack('dirt', 200));
+    inv.take(new ItemStack('dirt', 1));
+    t.equal(inv + '', '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,');
+    inv.take(new ItemStack('dirt', 100));
+    console.log(inv + '');
+    t.equal(inv + '', ',27:dirt,64:dirt,8:dirt,,,,,,');
     return t.end();
   });
 

@@ -35,11 +35,18 @@
     };
 
     Inventory.prototype.take = function(itemStack) {
-      var given, i, _i, _ref, _results;
+      var given, i, n, _i, _ref, _results;
       _results = [];
       for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-        if ((this.array[i] != null) && this.array[i].matchesAll(itemStack)) {
-          _results.push(given = this.array[i].splitStack(itemStack.count));
+        if ((this.array[i] != null) && this.array[i].matchesTypeAndTags(itemStack)) {
+          n = Math.min(itemStack.count, this.array[i].count);
+          itemStack.count -= n;
+          given = this.array[i].splitStack(n);
+          if (this.array[i].count === 0) {
+            _results.push(this.array[i] = void 0);
+          } else {
+            _results.push(void 0);
+          }
         } else {
           _results.push(void 0);
         }
@@ -122,6 +129,13 @@
       return excessCount;
     };
 
+    ItemStack.prototype.decrease = function(n) {
+      var remainingCount, removedCount, _ref;
+      _ref = this.trySubtracting(n), removedCount = _ref[0], remainingCount = _ref[1];
+      this.count = remainingCount;
+      return removedCount;
+    };
+
     ItemStack.prototype.tryAdding = function(n) {
       var sum;
       sum = this.count + n;
@@ -129,6 +143,16 @@
         return [this.maxStackSize, sum - this.maxStackSize];
       } else {
         return [sum, 0];
+      }
+    };
+
+    ItemStack.prototype.trySubtracting = function(n) {
+      var difference;
+      difference = this.count - n;
+      if (difference < 0) {
+        return [this.count, n - this.count];
+      } else {
+        return [n, this.count - n];
       }
     };
 

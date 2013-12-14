@@ -27,8 +27,13 @@ class Inventory
 
   take: (itemStack) ->
     for i in [0...@array.length]
-      if @array[i]? and @array[i].matchesAll(itemStack)
-        given = @array[i].splitStack(itemStack.count)
+      if @array[i]? and @array[i].matchesTypeAndTags(itemStack)
+        n = Math.min(itemStack.count, @array[i].count)
+
+        itemStack.count -= n
+        given = @array[i].splitStack(n)
+        if @array[i].count == 0
+          @array[i] = undefined
 
 
   toString: () ->
@@ -81,13 +86,27 @@ class ItemStack
     @count = newCount
     return excessCount
 
+  # decrease count by argument, returning number of items removed
+  decrease: (n) ->
+    [removedCount, remainingCount] = @trySubtracting(n)
+    @count = remainingCount
+    return removedCount
+
   # try combining count of items up to max stack size, returns [newCount, excessCount]
   tryAdding: (n) ->
     sum = @count + n
     if sum > @maxStackSize
-      return [@maxStackSize, sum - @maxStackSize]
+      return [@maxStackSize, sum - @maxStackSize] # overflowing stack
     else
-      return [sum, 0]
+      return [sum, 0] # added everything they wanted
+
+  # try removing count of items, returns [removedCount, remainingCount]
+  trySubtracting: (n) ->
+    difference = @count - n
+    if difference < 0
+      return [@count, n - @count] # didn't have enough
+    else
+      return [n, @count - n]  # had enough, some remain
 
   splitStack: (n) ->
     return false if n > @count
