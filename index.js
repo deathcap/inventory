@@ -39,6 +39,9 @@
       this.item = item;
       this.count = count != null ? count : 1;
       this.tags = tags != null ? tags : {};
+      if (Object.keys(this.tags).length === 0) {
+        this.tags = void 0;
+      }
       this.maxStackSize = 64;
     }
 
@@ -59,16 +62,18 @@
       }
       _ref = this.tryAdding(itemStack.count), newCount = _ref[0], excessCount = _ref[1];
       this.count = newCount;
-      this.itemStack.count = excessCount;
+      itemStack.count = excessCount;
       return excessCount;
     };
 
     ItemStack.prototype.tryAdding = function(n) {
-      var excessCount, newCount, sum;
+      var sum;
       sum = this.count + n;
-      newCount = sum % this.maxStackSize;
-      excessCount = sum - newCount;
-      return [newCount, excessCount];
+      if (sum > this.maxStackSize) {
+        return [this.maxStackSize, sum - this.maxStackSize];
+      } else {
+        return [sum, 0];
+      }
     };
 
     ItemStack.prototype.splitStack = function(n) {

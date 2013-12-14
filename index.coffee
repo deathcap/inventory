@@ -27,6 +27,8 @@ class ItemStack
     @count = count ? 1
     @tags = tags ? {}
 
+    @tags = undefined if Object.keys(@tags).length == 0
+
     @maxStackSize = 64
 
   canStackWith: (itemStack) ->
@@ -39,15 +41,16 @@ class ItemStack
 
     [newCount, excessCount] = @tryAdding(itemStack.count)
     @count = newCount
-    @itemStack.count = excessCount
+    itemStack.count = excessCount
     return excessCount
 
+  # try combining count of items up to max stack size, returns [newCount, excessCount]
   tryAdding: (n) ->
     sum = @count + n
-    newCount = sum % @maxStackSize
-    excessCount = sum - newCount
-
-    return [newCount, excessCount]
+    if sum > @maxStackSize
+      return [@maxStackSize, sum - @maxStackSize]
+    else
+      return [sum, 0]
 
   splitStack: (n) ->
     return false if n > @count
