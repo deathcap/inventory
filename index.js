@@ -11,18 +11,23 @@
     }
 
     Inventory.prototype.give = function(itemStack) {
-      var excess, i, _i, _len, _ref, _results;
+      var excess, i, _i, _j, _len, _len1, _ref, _ref1;
       _ref = this.array;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         i = _ref[_i];
         if ((this.array[i] != null) && this.array[i].canStackWith(itemStack)) {
-          _results.push(excess = this.array[i].mergeWith(itemStack));
-        } else {
-          _results.push(void 0);
+          excess = this.array[i].mergeStack(itemStack);
         }
       }
-      return _results;
+      _ref1 = this.array;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        i = _ref1[_j];
+        if (this.array[i] == null) {
+          this.array[i] = new ItemStack(itemStack.item, 0);
+          excess = this.array[i].mergeStack(itemStack);
+        }
+      }
+      return excess;
     };
 
     return Inventory;
@@ -32,8 +37,9 @@
   ItemStack = (function() {
     function ItemStack(item, count, tags) {
       this.item = item;
-      this.count = count;
-      this.tags = tags;
+      this.count = count != null ? count : 1;
+      this.tags = tags != null ? tags : {};
+      this.maxStackSize = 64;
     }
 
     ItemStack.prototype.canStackWith = function(itemStack) {
@@ -46,13 +52,31 @@
       return true;
     };
 
-    ItemStack.prototype.merge = function(itemStack) {
-      var excessStack, mergedStack, n, stackSize;
-      n = this.count + itemStack.count;
-      stackSize = this.item.maxStackSize();
-      mergedStack = new ItemStack(this.item, n % stackSize, this.tags);
-      excessStack = new ItemStack(this.item, n - mergedStack.count, this.tags);
-      return [mergedStack, excessStack];
+    ItemStack.prototype.mergeStack = function(itemStack) {
+      var excessCount, newCount, _ref;
+      if (!this.canStackWith(itemStack)) {
+        return false;
+      }
+      _ref = this.tryAdding(itemStack.count), newCount = _ref[0], excessCount = _ref[1];
+      this.count = newCount;
+      this.itemStack.count = excessCount;
+      return excessCount;
+    };
+
+    ItemStack.prototype.tryAdding = function(n) {
+      var excessCount, newCount, sum;
+      sum = this.count + n;
+      newCount = sum % this.maxStackSize;
+      excessCount = sum - newCount;
+      return [newCount, excessCount];
+    };
+
+    ItemStack.prototype.splitStack = function(n) {
+      if (n > this.count) {
+        return false;
+      }
+      this.count -= n;
+      return new ItemStack(this.item, n, this.tags);
     };
 
     return ItemStack;
@@ -67,10 +91,6 @@
         this[k] = v;
       }
     }
-
-    Item.prototype.maxStackSize = function() {
-      return 64;
-    };
 
     return Item;
 

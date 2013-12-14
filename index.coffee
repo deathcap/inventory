@@ -7,38 +7,58 @@ class Inventory
     @array = new Array(size)
 
   give: (itemStack) ->
+    # first add to existing stacks
     for i in @array
       if @array[i]? and @array[i].canStackWith(itemStack)
-        excess = @array[i].mergeWith itemStack
+        excess = @array[i].mergeStack(itemStack)
+
+    # then if we have to, add to empty slots
+    for i in @array
+      if not @array[i]?
+        @array[i] = new ItemStack(itemStack.item, 0)
+        excess = @array[i].mergeStack(itemStack)
+
+    # what didn't fit
+    return excess
 
 class ItemStack
   constructor: (item, count, tags) ->
     @item = item
-    @count = count
-    @tags = tags
+    @count = count ? 1
+    @tags = tags ? {}
+
+    @maxStackSize = 64
 
   canStackWith: (itemStack) ->
     return false if itemStack.item != @item
     return false if itemStack.tags? or @tags # any tag data makes unstackable
     true
 
-  # Merge this stack with another, returning the merged stack and excess stack that didn't fit
-  merge: (itemStack) ->
-    n = @count + itemStack.count
-    stackSize = @item.maxStackSize()
+  mergeStack: (itemStack) ->
+    return false if not @canStackWith(itemStack)
 
-    mergedStack = new ItemStack(@item, n % stackSize, @tags)
-    excessStack = new ItemStack(@item, n - mergedStack.count, @tags)
+    [newCount, excessCount] = @tryAdding(itemStack.count)
+    @count = newCount
+    @itemStack.count = excessCount
+    return excessCount
 
-    return [mergedStack, excessStack]
+  tryAdding: (n) ->
+    sum = @count + n
+    newCount = sum % @maxStackSize
+    excessCount = sum - newCount
+
+    return [newCount, excessCount]
+
+  splitStack: (n) ->
+    return false if n > @count
+    @count -= n
+
+    return new ItemStack(@item, n, @tags)
 
 class Item
   constructor: (opts) ->
     for k, v of opts
       this[k] = v
-
-  maxStackSize: () ->
-    return 64
 
 
 
