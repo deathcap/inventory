@@ -97,13 +97,28 @@
   })();
 
   ItemStack = (function() {
-    ItemStack.maxStackSize = 64;
-
     function ItemStack(item, count, tags) {
-      this.item = item;
+      this.item = typeof item === 'string' ? ItemStack.itemFromString(item) : item;
       this.count = count != null ? count : 1;
       this.tags = tags != null ? tags : {};
     }
+
+    ItemStack.maxStackSize = 64;
+
+    ItemStack.itemFromString = function(s) {
+      if (s instanceof ItemStack) {
+        return s;
+      }
+      if (!s) {
+        return '';
+      } else {
+        return s;
+      }
+    };
+
+    ItemStack.itemToString = function(item) {
+      return '' + item;
+    };
 
     ItemStack.prototype.hasTags = function() {
       return Object.keys(this.tags).length !== 0;
@@ -204,7 +219,7 @@
       }
       _ = a[0], countStr = a[1], itemStr = a[2], tagsStr = a[3];
       count = parseInt(countStr, 10);
-      item = itemStr;
+      item = ItemStack.itemFromString(itemStr);
       if (tagsStr && tagsStr.length) {
         tags = JSON.parse(tagsStr);
       } else {

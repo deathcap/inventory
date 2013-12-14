@@ -130,10 +130,23 @@
     for (_i = 0, _len = strings.length; _i < _len; _i++) {
       s = strings[_i];
       b = ItemStack.fromString(s);
-      outStr = b.toString();
+      outStr = b + '';
       t.equal(s, outStr);
       console.log("=", s, outStr);
     }
+    return t.end();
+  });
+
+  test('ItemStack itemFromString', function(t) {
+    var a, b, c, d;
+    a = ItemStack.itemFromString('foo');
+    t.equals(a, 'foo');
+    b = ItemStack.itemFromString(void 0);
+    t.equal(b, '');
+    c = ItemStack.itemToString('bar');
+    t.equals(c, 'bar');
+    d = ItemStack.itemToString(ItemStack.itemFromString(null));
+    t.equals(d, '');
     return t.end();
   });
 

@@ -116,9 +116,23 @@ test 'ItemStack fromString/toString roundtrip', (t) ->
     ]
   for s in strings
     b = ItemStack.fromString(s)
-    outStr = b.toString()
+    outStr = b+''
     t.equal(s, outStr)
     console.log("=",s, outStr)
+  t.end()
+
+test 'ItemStack itemFromString', (t) ->
+  a = ItemStack.itemFromString('foo')
+  t.equals(a, 'foo')
+
+  b = ItemStack.itemFromString(undefined)
+  t.equal(b, '')
+
+  c = ItemStack.itemToString('bar')
+  t.equals(c, 'bar')
+
+  d = ItemStack.itemToString(ItemStack.itemFromString(null))
+  t.equals(d, '')
   t.end()
 
 tabsToCommas = (s) ->

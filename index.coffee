@@ -58,12 +58,22 @@ class Inventory
     @array[i]
 
 class ItemStack
-  @maxStackSize = 64
 
   constructor: (item, count, tags) ->
-    @item = item
+    @item = if typeof(item) == 'string' then ItemStack.itemFromString(item) else item
     @count = count ? 1
     @tags = tags ? {}
+
+  # maximum size items should stack to
+  @maxStackSize = 64
+
+  # convert item<->string; change these to use non-string items
+  @itemFromString: (s) ->
+    if s instanceof ItemStack then return s
+    if !s then '' else s
+
+  @itemToString: (item) ->
+    ''+item
 
   hasTags: () ->
     Object.keys(@tags).length != 0    # not "{}"
@@ -86,7 +96,7 @@ class ItemStack
     return false if itemStack.hasTags() or @hasTags() # any tag data makes unstackable
     true
 
-  # combine two stacks if possible, alterning both this and argument stack
+  # combine two stacks if possible, altering both this and argument stack
   # returns count of items that didn't fit
   mergeStack: (itemStack) ->
     return false if not @canStackWith(itemStack)
@@ -120,6 +130,7 @@ class ItemStack
     else
       return [n, @count - n]  # had enough, some remain
 
+  # remove count of argument items, returning new stack of those items which were split off
   splitStack: (n) ->
     return false if n > @count
     @count -= n
@@ -137,7 +148,7 @@ class ItemStack
     return undefined if not a
     [_, countStr, itemStr, tagsStr] = a
     count = parseInt(countStr, 10)
-    item = itemStr  # TODO: item might be Item class?
+    item = ItemStack.itemFromString(itemStr)
     if tagsStr && tagsStr.length
       tags = JSON.parse(tagsStr)
     else
