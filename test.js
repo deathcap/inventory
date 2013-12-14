@@ -68,7 +68,7 @@
   });
 
   test('ItemStack matches', function(t) {
-    var a, b, c, d, e, f;
+    var a, b, c, d, e, f, g;
     a = new ItemStack('dirt', 3);
     b = new ItemStack('dirt', 4);
     t.equal(a.matchesType(b), true);
@@ -90,10 +90,14 @@
     f = new ItemStack('magic', 1, {
       foo: -7
     });
+    g = new ItemStack('magic', 2, {
+      foo: -7
+    });
     t.equal(d.matchesType(d), true);
     t.equal(d.matchesTypeAndCount(e), true);
     t.equal(d.matchesAll(e), false);
     t.equal(d.matchesAll(f), true);
+    t.equal(g.matchesTypeAndTags(d), true);
     return t.end();
   });
 

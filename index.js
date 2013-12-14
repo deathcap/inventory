@@ -34,6 +34,19 @@
       return excess;
     };
 
+    Inventory.prototype.take = function(itemStack) {
+      var given, i, _i, _ref, _results;
+      _results = [];
+      for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        if ((this.array[i] != null) && this.array[i].matchesAll(itemStack)) {
+          _results.push(given = this.array[i].splitStack(itemStack.count));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
     Inventory.prototype.toString = function() {
       var a, i, itemStack, _i, _len, _ref;
       a = [];
@@ -71,6 +84,12 @@
 
     ItemStack.prototype.matchesTypeAndCount = function(itemStack) {
       return this.item === itemStack.item && this.count === itemStack.count;
+    };
+
+    ItemStack.prototype.matchesTypeAndTags = function(itemStack) {
+      return this.item === itemStack.item && deepEqual(this.tags, itemStack.tags, {
+        strict: true
+      });
     };
 
     ItemStack.prototype.matchesAll = function(itemStack) {

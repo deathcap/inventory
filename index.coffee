@@ -25,6 +25,12 @@ class Inventory
     # what didn't fit
     return excess
 
+  take: (itemStack) ->
+    for i in [0...@array.length]
+      if @array[i]? and @array[i].matchesAll(itemStack)
+        given = @array[i].splitStack(itemStack.count)
+
+
   toString: () ->
     a = []
     for itemStack, i in @array
@@ -50,6 +56,9 @@ class ItemStack
 
   matchesTypeAndCount: (itemStack) ->
     @item == itemStack.item && @count == itemStack.count
+
+  matchesTypeAndTags: (itemStack) ->
+    @item == itemStack.item && deepEqual(@tags, itemStack.tags, {strict:true})
 
   matchesAll: (itemStack) ->
     @matchesTypeAndCount(itemStack) && deepEqual(@tags, itemStack.tags, {strict:true})

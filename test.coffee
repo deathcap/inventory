@@ -78,10 +78,12 @@ test 'ItemStack matches', (t) ->
   d = new ItemStack('magic', 1, {foo:-7})
   e = new ItemStack('magic', 1, {foo:54})
   f = new ItemStack('magic', 1, {foo:-7})
+  g = new ItemStack('magic', 2, {foo:-7})
   t.equal(d.matchesType(d), true)
   t.equal(d.matchesTypeAndCount(e), true)
   t.equal(d.matchesAll(e), false)
   t.equal(d.matchesAll(f), true)
+  t.equal(g.matchesTypeAndTags(d), true)
 
   t.end()
 
