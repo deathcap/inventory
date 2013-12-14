@@ -8,18 +8,26 @@ class Inventory
 
   give: (itemStack) ->
     # first add to existing stacks
-    for i in @array
+    for i in [0...@array.length]
       if @array[i]? and @array[i].canStackWith(itemStack)
         excess = @array[i].mergeStack(itemStack)
+      break if itemStack.count == 0
 
     # then if we have to, add to empty slots
-    for i in @array
+    for i in [0...@array.length]
       if not @array[i]?
         @array[i] = new ItemStack(itemStack.item, 0)
         excess = @array[i].mergeStack(itemStack)
+      break if itemStack.count == 0
 
     # what didn't fit
     return excess
+
+  toString: () ->
+    s = ''
+    for itemStack, i in @array
+      s += "#{i}=#{itemStack}\n"
+    s
 
 class ItemStack
   constructor: (item, count, tags) ->

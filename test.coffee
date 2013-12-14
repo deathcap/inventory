@@ -63,3 +63,15 @@ test 'ItemStack toString', (t) ->
   console.log a.toString()
   t.equal(a+"", 'dirt x 42 {}')
   t.end()
+
+test 'Inventory', (t) ->
+  inv = new Inventory()
+
+  for i in [0..10]
+    console.log "\n\n1. #{i}"
+    excess = inv.give new ItemStack('dirt', 42)
+    console.log 'excess',excess
+    console.log inv+""
+
+  t.end()
+

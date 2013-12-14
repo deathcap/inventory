@@ -11,23 +11,36 @@
     }
 
     Inventory.prototype.give = function(itemStack) {
-      var excess, i, _i, _j, _len, _len1, _ref, _ref1;
-      _ref = this.array;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        i = _ref[_i];
+      var excess, i, _i, _j, _ref, _ref1;
+      for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
         if ((this.array[i] != null) && this.array[i].canStackWith(itemStack)) {
           excess = this.array[i].mergeStack(itemStack);
         }
+        if (itemStack.count === 0) {
+          break;
+        }
       }
-      _ref1 = this.array;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        i = _ref1[_j];
+      for (i = _j = 0, _ref1 = this.array.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
         if (this.array[i] == null) {
           this.array[i] = new ItemStack(itemStack.item, 0);
           excess = this.array[i].mergeStack(itemStack);
         }
+        if (itemStack.count === 0) {
+          break;
+        }
       }
       return excess;
+    };
+
+    Inventory.prototype.toString = function() {
+      var i, itemStack, s, _i, _len, _ref;
+      s = '';
+      _ref = this.array;
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        itemStack = _ref[i];
+        s += "" + i + "=" + itemStack + "\n";
+      }
+      return s;
     };
 
     return Inventory;

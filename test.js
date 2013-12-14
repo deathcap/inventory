@@ -75,4 +75,16 @@
     return t.end();
   });
 
+  test('Inventory', function(t) {
+    var excess, i, inv, _i;
+    inv = new Inventory();
+    for (i = _i = 0; _i <= 10; i = ++_i) {
+      console.log("\n\n1. " + i);
+      excess = inv.give(new ItemStack('dirt', 42));
+      console.log('excess', excess);
+      console.log(inv + "");
+    }
+    return t.end();
+  });
+
 }).call(this);
