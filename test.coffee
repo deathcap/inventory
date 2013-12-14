@@ -121,6 +121,9 @@ test 'ItemStack fromString/toString roundtrip', (t) ->
     console.log("=",s, outStr)
   t.end()
 
+tabsToCommas = (s) ->
+  s.replace(/\t/g, ',')
+
 test 'Inventory give', (t) ->
   inv = new Inventory()
 
@@ -149,7 +152,7 @@ test 'Inventory give', (t) ->
     excess = inv.give new ItemStack('dirt', 42)
     #console.log 'excess',excess
     #console.log inv+''
-    t.equal inv+'', expectedInvs[i]
+    t.equal tabsToCommas(inv+''), expectedInvs[i]
 
     if i == 15
       t.equal excess, 32    # partially added
@@ -164,7 +167,7 @@ test 'Inventory give large', (t) ->
   inv.give new ItemStack('dirt', 200)
   console.log(inv+'')
 
-  t.equal inv+'', '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
+  t.equal tabsToCommas(inv+''), '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
   t.end()
 
 test 'Inventory take', (t) ->
@@ -172,10 +175,10 @@ test 'Inventory take', (t) ->
 
   inv.give new ItemStack('dirt', 200)
   inv.take new ItemStack('dirt', 1)
-  t.equal(inv+'', '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,')
+  t.equal tabsToCommas(inv+''), '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
 
   inv.take new ItemStack('dirt', 100)
   console.log(inv+'')
-  t.equal(inv+'', ',27:dirt,64:dirt,8:dirt,,,,,,')
+  t.equal tabsToCommas(inv+''), ',27:dirt,64:dirt,8:dirt,,,,,,'
 
   t.end()

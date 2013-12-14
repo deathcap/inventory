@@ -5,10 +5,8 @@
   deepEqual = require('deep-equal');
 
   Inventory = (function() {
-    function Inventory(opts) {
-      var size, _ref;
-      opts = opts != null ? opts : {};
-      size = (_ref = opts.size) != null ? _ref : 10;
+    function Inventory(size, opts) {
+      size = size != null ? size : 10;
       this.array = new Array(size);
     }
 
@@ -66,7 +64,21 @@
           a.push("" + itemStack);
         }
       }
-      return a.join(',');
+      return a.join('\t');
+    };
+
+    Inventory.fromString = function(s) {
+      var items, strings;
+      strings = s.split('\t');
+      return items = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = strings.length; _i < _len; _i++) {
+          s = strings[_i];
+          _results.push(ItemStack.fromString(s));
+        }
+        return _results;
+      })();
     };
 
     return Inventory;

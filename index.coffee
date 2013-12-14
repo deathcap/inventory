@@ -3,9 +3,8 @@
 deepEqual = require 'deep-equal'
 
 class Inventory
-  constructor: (opts) ->
-    opts = opts ? {}
-    size = opts.size ? 10
+  constructor: (size, opts) ->
+    size = size ? 10
     @array = new Array(size)
 
   give: (itemStack) ->
@@ -43,7 +42,11 @@ class Inventory
         a.push('')
       else
         a.push("#{itemStack}")
-    a.join(',')
+    a.join('\t')
+
+  @fromString: (s) ->
+    strings = s.split('\t') # literal tab not in JSON.stringify
+    items = (ItemStack.fromString(s) for s in strings)
 
 class ItemStack
   constructor: (item, count, tags) ->
