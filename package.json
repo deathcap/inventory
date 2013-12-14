@@ -6,6 +6,12 @@
         "type": "git",
         "url": "git@github.com:deathcap/inventory.git"
     },
+    "scripts": {
+        "test": "node test.js"
+    },
     "dependencies": {
+    },
+    "devDependencies": {
+        "tape": "2.3.0"
     }
 }
