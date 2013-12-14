@@ -156,15 +156,6 @@ class ItemStack
 
     return new ItemStack(item, count, tags)
 
-class Item
-  constructor: (opts) ->
-    for k, v of opts
-      this[k] = v
-
-
 
 module.exports.Inventory = Inventory
 module.exports.ItemStack = ItemStack
-module.exports.Item = Item
-
-
