@@ -38,6 +38,10 @@ class Inventory
         if @array[i].count == 0
           @array[i] = undefined
 
+  takeAt: (position, count) ->
+    return false if not @array[position]
+    @array[position].splitPile count
+
 
   toString: () ->
     a = []

@@ -55,6 +55,13 @@
       return _results;
     };
 
+    Inventory.prototype.takeAt = function(position, count) {
+      if (!this.array[position]) {
+        return false;
+      }
+      return this.array[position].splitPile(count);
+    };
+
     Inventory.prototype.toString = function() {
       var a, i, itemPile, _i, _len, _ref;
       a = [];
