@@ -34,9 +34,7 @@ class Inventory
         n = Math.min(itemPile.count, @array[i].count)
 
         itemPile.count -= n
-        given = @array[i].splitPile(n)
-        if @array[i].count == 0
-          @array[i] = undefined
+        given = @takeAt i, n
 
   takeAt: (position, count) ->
     return false if not @array[position]

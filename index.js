@@ -42,12 +42,7 @@
         if ((this.array[i] != null) && this.array[i].matchesTypeAndTags(itemPile)) {
           n = Math.min(itemPile.count, this.array[i].count);
           itemPile.count -= n;
-          given = this.array[i].splitPile(n);
-          if (this.array[i].count === 0) {
-            _results.push(this.array[i] = void 0);
-          } else {
-            _results.push(void 0);
-          }
+          _results.push(given = this.takeAt(i, n));
         } else {
           _results.push(void 0);
         }
