@@ -56,10 +56,15 @@
     };
 
     Inventory.prototype.takeAt = function(position, count) {
+      var ret;
       if (!this.array[position]) {
         return false;
       }
-      return this.array[position].splitPile(count);
+      ret = this.array[position].splitPile(count);
+      if (this.array[position].count === 0) {
+        this.array[position] = void 0;
+      }
+      return ret;
     };
 
     Inventory.prototype.toString = function() {

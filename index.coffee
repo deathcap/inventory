@@ -40,7 +40,10 @@ class Inventory
 
   takeAt: (position, count) ->
     return false if not @array[position]
-    @array[position].splitPile count
+    ret = @array[position].splitPile count
+    if @array[position].count == 0
+      @array[position] = undefined
+    ret
 
 
   toString: () ->
