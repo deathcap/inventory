@@ -2,9 +2,10 @@
 
 deepEqual = require 'deep-equal'
 ItemPile = require 'itempile'
+EventEmitter = (require 'events').EventEmitter
 
 module.exports =
-class Inventory
+class Inventory extends EventEmitter
   constructor: (size, opts) ->
     size = size ? 10
     @array = new Array(size)
@@ -25,6 +26,8 @@ class Inventory
         excess = @array[i].mergePile(itemPile)
       break if itemPile.count == 0
 
+    @emit 'changed'
+
     # what didn't fit
     return excess
 
@@ -35,12 +38,14 @@ class Inventory
 
         itemPile.count -= n
         given = @takeAt i, n
+    @emit 'changed'
 
   takeAt: (position, count) ->
     return false if not @array[position]
     ret = @array[position].splitPile count
     if @array[position].count == 0
       @array[position] = undefined
+    @emit 'changed'
     ret
 
 
@@ -64,5 +69,5 @@ class Inventory
     @array.length
 
   slot: (i) ->
-    @array[i]
+    @array[i]   # TODO: emit events when changed directly?
 
