@@ -7,7 +7,7 @@ ItemPile = require 'itempile'
 tabsToCommas = (s) ->
   s.replace(/\t/g, ',')
 
-test 'Inventory give', (t) ->
+test 'give', (t) ->
   inv = new Inventory()
 
   expectedInvs = [
@@ -44,7 +44,7 @@ test 'Inventory give', (t) ->
 
   t.end()
 
-test 'Inventory give large', (t) ->
+test 'give large', (t) ->
   inv = new Inventory()
 
   inv.give new ItemPile('dirt', 200)
@@ -53,7 +53,7 @@ test 'Inventory give large', (t) ->
   t.equal tabsToCommas(inv+''), '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
   t.end()
 
-test 'Inventory take', (t) ->
+test 'take', (t) ->
   inv = new Inventory()
 
   inv.give new ItemPile('dirt', 200)
@@ -66,7 +66,7 @@ test 'Inventory take', (t) ->
 
   t.end()
 
-test 'Inventory fromString', (t) ->
+test 'fromString', (t) ->
   inv = Inventory.fromString('\t10:dirt\t20:grass')
   console.log(inv+'')
   t.equals(inv.size(), 3)

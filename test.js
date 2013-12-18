@@ -12,7 +12,7 @@
     return s.replace(/\t/g, ',');
   };
 
-  test('Inventory give', function(t) {
+  test('give', function(t) {
     var excess, expectedInvs, i, inv, _i;
     inv = new Inventory();
     expectedInvs = ['42:dirt,,,,,,,,,', '64:dirt,20:dirt,,,,,,,,', '64:dirt,62:dirt,,,,,,,,', '64:dirt,64:dirt,40:dirt,,,,,,,', '64:dirt,64:dirt,64:dirt,18:dirt,,,,,,', '64:dirt,64:dirt,64:dirt,60:dirt,,,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,38:dirt,,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,16:dirt,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,58:dirt,,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,36:dirt,,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,14:dirt,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,56:dirt,,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,34:dirt,', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,12:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,54:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt', '64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt,64:dirt'];
@@ -29,7 +29,7 @@
     return t.end();
   });
 
-  test('Inventory give large', function(t) {
+  test('give large', function(t) {
     var inv;
     inv = new Inventory();
     inv.give(new ItemPile('dirt', 200));
@@ -38,7 +38,7 @@
     return t.end();
   });
 
-  test('Inventory take', function(t) {
+  test('take', function(t) {
     var inv;
     inv = new Inventory();
     inv.give(new ItemPile('dirt', 200));
@@ -50,7 +50,7 @@
     return t.end();
   });
 
-  test('Inventory fromString', function(t) {
+  test('fromString', function(t) {
     var inv;
     inv = Inventory.fromString('\t10:dirt\t20:grass');
     console.log(inv + '');
