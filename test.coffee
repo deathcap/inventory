@@ -74,3 +74,9 @@ test 'fromString', (t) ->
   t.equals(inv.slot(1)+'', '10:dirt')
   t.equals(inv.slot(2)+'', '20:grass')
   t.end()
+
+test 'swap', (t) ->
+  inv = Inventory.fromString('\t10:dirt\t20:grass')
+  inv.swap(1, 2)
+  t.equals(inv.toString(), '\t20:grass\t10:dirt')
+  t.end()

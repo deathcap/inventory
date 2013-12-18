@@ -42,6 +42,13 @@
       return excess;
     };
 
+    Inventory.prototype.swap = function(a, b) {
+      var tmp;
+      tmp = this.array[a];
+      this.array[a] = this.array[b];
+      return this.array[b] = tmp;
+    };
+
     Inventory.prototype.take = function(itemPile) {
       var given, i, n, _i, _ref;
       for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {

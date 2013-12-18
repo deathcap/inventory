@@ -31,6 +31,11 @@ class Inventory extends EventEmitter
     # what didn't fit
     return excess
 
+  swap: (a, b) ->
+    tmp = @array[a]
+    @array[a] = @array[b]
+    @array[b] = tmp
+
   take: (itemPile) ->
     for i in [0...@array.length]
       if @array[i]? and @array[i].matchesTypeAndTags(itemPile)

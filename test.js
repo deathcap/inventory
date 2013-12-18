@@ -61,4 +61,12 @@
     return t.end();
   });
 
+  test('swap', function(t) {
+    var inv;
+    inv = Inventory.fromString('\t10:dirt\t20:grass');
+    inv.swap(1, 2);
+    t.equals(inv.toString(), '\t20:grass\t10:dirt');
+    return t.end();
+  });
+
 }).call(this);
