@@ -46,6 +46,18 @@
       return excess;
     };
 
+    Inventory.prototype.take = function(itemPile) {
+      var given, i, n, _i, _ref;
+      for (i = _i = 0, _ref = this.array.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        if ((this.array[i] != null) && this.array[i].matchesTypeAndTags(itemPile)) {
+          n = Math.min(itemPile.count, this.array[i].count);
+          itemPile.count -= n;
+          given = this.takeAt(i, n);
+        }
+      }
+      return this.changed();
+    };
+
     Inventory.prototype.takeAt = function(position, count) {
       var ret;
       if (!this.array[position]) {

@@ -34,6 +34,15 @@ class Inventory extends EventEmitter
     # what didn't fit
     return excess
 
+  take: (itemPile) ->
+    for i in [0...@array.length]
+      if @array[i]? and @array[i].matchesTypeAndTags(itemPile)
+        n = Math.min(itemPile.count, @array[i].count)
+
+        itemPile.count -= n
+        given = @takeAt i, n
+    @changed()
+
   takeAt: (position, count) ->
     return false if not @array[position]
     ret = @array[position].splitPile count
