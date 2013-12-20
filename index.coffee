@@ -10,6 +10,9 @@ class Inventory extends EventEmitter
     size = size ? 10
     @array = new Array(size)
 
+  changed: () ->
+    @emit 'changed'
+
   give: (itemPile) ->
     excess = itemPile.count
 
@@ -26,7 +29,7 @@ class Inventory extends EventEmitter
         excess = @array[i].mergePile(itemPile)
       break if itemPile.count == 0
 
-    @emit 'changed'
+    @changed()
 
     # what didn't fit
     return excess
@@ -36,7 +39,7 @@ class Inventory extends EventEmitter
     ret = @array[position].splitPile count
     if @array[position].count == 0
       @array[position] = undefined
-    @emit 'changed'
+    @changed()
     ret
 
 
