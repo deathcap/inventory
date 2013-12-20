@@ -71,8 +71,8 @@ class Inventory extends EventEmitter
   size: () ->
     @array.length
 
-  slot: (i) ->
-    @array[i]   # TODO: emit events when changed directly?
+  get: (i) ->
+    @array[i]
 
   set: (i, itemPile) ->
     @array[i] = itemPile

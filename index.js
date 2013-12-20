@@ -107,7 +107,7 @@
       return this.array.length;
     };
 
-    Inventory.prototype.slot = function(i) {
+    Inventory.prototype.get = function(i) {
       return this.array[i];
     };
 
