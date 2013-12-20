@@ -65,3 +65,6 @@ class Inventory extends EventEmitter
   slot: (i) ->
     @array[i]   # TODO: emit events when changed directly?
 
+  set: (i, itemPile) ->
+    @array[i] = itemPile
+    @changed()
