@@ -12,6 +12,23 @@
     return s.replace(/\t/g, ',');
   };
 
+  test('size', function(t) {
+    var a, b, c;
+    a = new Inventory();
+    t.equal(a.size(), 10);
+    t.equal(a.width, 10);
+    t.equal(a.height, 1);
+    b = new Inventory(5);
+    t.equal(b.size(), 5);
+    t.equal(b.width, 5);
+    t.equal(b.height, 1);
+    c = new Inventory(3, 2);
+    t.equal(c.size(), 3 * 2);
+    t.equal(c.width, 3);
+    t.equal(c.height, 2);
+    return t.end();
+  });
+
   test('give', function(t) {
     var excess, expectedInvs, i, inv, _i;
     inv = new Inventory();

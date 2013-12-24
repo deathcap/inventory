@@ -7,9 +7,15 @@ Simple finite stackable item inventories (for games).
 A new inventory can be created given its desired size (number of slots):
 
     var Inventory = require('inventory');
-    var inv = new Inventory(10);
+    var inv = new Inventory(5);
 
-If omitted, defaults to 10.
+If omitted, defaults to 10. You can pass two arguments for 2D inventory:
+
+    new Inventory(3, 2)
+
+creates a 3x2 = 6 slot inventory (3 columns, 2 rows). Internally it still
+stored as one-dimensional, but other modules can query the dimensions
+(width and height).
 
 ## Adding items
 

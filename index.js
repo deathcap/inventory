@@ -13,9 +13,18 @@
   module.exports = Inventory = (function(_super) {
     __extends(Inventory, _super);
 
-    function Inventory(size, opts) {
-      size = size != null ? size : 10;
+    function Inventory(xSize, ySize, opts) {
+      var size;
+      if (xSize == null) {
+        xSize = 10;
+      }
+      if (ySize == null) {
+        ySize = 1;
+      }
+      size = xSize * ySize;
       this.array = new Array(size);
+      this.width = xSize;
+      this.height = ySize;
     }
 
     Inventory.prototype.changed = function() {

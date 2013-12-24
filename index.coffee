@@ -6,9 +6,11 @@ EventEmitter = (require 'events').EventEmitter
 
 module.exports =
 class Inventory extends EventEmitter
-  constructor: (size, opts) ->
-    size = size ? 10
+  constructor: (xSize=10, ySize=1, opts) ->
+    size = xSize * ySize
     @array = new Array(size)
+    @width = xSize
+    @height = ySize
 
   changed: () ->
     @emit 'changed'

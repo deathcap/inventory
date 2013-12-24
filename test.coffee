@@ -7,6 +7,24 @@ ItemPile = require 'itempile'
 tabsToCommas = (s) ->
   s.replace(/\t/g, ',')
 
+test 'size', (t) ->
+  a = new Inventory()
+  t.equal(a.size(), 10)
+  t.equal(a.width, 10)
+  t.equal(a.height, 1)
+
+  b = new Inventory(5)
+  t.equal(b.size(), 5)
+  t.equal(b.width, 5)
+  t.equal(b.height, 1)
+
+  c = new Inventory(3, 2)
+  t.equal(c.size(), 3 * 2)
+  t.equal(c.width, 3)
+  t.equal(c.height, 2)
+
+  t.end()
+
 test 'give', (t) ->
   inv = new Inventory()
 
