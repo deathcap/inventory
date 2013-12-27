@@ -79,3 +79,9 @@ class Inventory extends EventEmitter
   set: (i, itemPile) ->
     @array[i] = itemPile
     @changed()
+
+  clear: () ->
+    for i in [0..@size()]
+      @set i, undefined
+
+      

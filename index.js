@@ -125,6 +125,15 @@
       return this.changed();
     };
 
+    Inventory.prototype.clear = function() {
+      var i, _i, _ref, _results;
+      _results = [];
+      for (i = _i = 0, _ref = this.size(); 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        _results.push(this.set(i, void 0));
+      }
+      return _results;
+    };
+
     return Inventory;
 
   })(EventEmitter);

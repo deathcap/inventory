@@ -84,6 +84,19 @@ test 'take', (t) ->
 
   t.end()
 
+test 'clear', (t) ->
+  inv = new Inventory()
+
+  inv.give new ItemPile('dirt', 200)
+  inv.take new ItemPile('dirt', 1)
+  t.equal tabsToCommas(inv+''), '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
+
+  inv.clear()
+
+  t.equal tabsToCommas(inv+''), ',,,,,,,,,,'
+
+  t.end()
+
 test 'fromString', (t) ->
   inv = Inventory.fromString('\t10:dirt\t20:grass')
   console.log(inv+'')
