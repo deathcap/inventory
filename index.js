@@ -128,7 +128,17 @@
     Inventory.prototype.clear = function() {
       var i, _i, _ref, _results;
       _results = [];
-      for (i = _i = 0, _ref = this.size(); 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = _i = 0, _ref = this.size(); 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        _results.push(this.set(i, void 0));
+      }
+      return _results;
+    };
+
+    Inventory.prototype.transferTo = function(dest) {
+      var i, _i, _ref, _results;
+      _results = [];
+      for (i = _i = 0, _ref = this.size(); 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        dest.set(i, this.get(i));
         _results.push(this.set(i, void 0));
       }
       return _results;

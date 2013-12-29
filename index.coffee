@@ -81,7 +81,11 @@ class Inventory extends EventEmitter
     @changed()
 
   clear: () ->
-    for i in [0..@size()]
+    for i in [0...@size()]
       @set i, undefined
 
-      
+  transferTo: (dest) ->
+    for i in [0...@size()]
+      dest.set i, @get(i)
+      @set i, undefined
+

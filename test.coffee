@@ -93,7 +93,28 @@ test 'clear', (t) ->
 
   inv.clear()
 
-  t.equal tabsToCommas(inv+''), ',,,,,,,,,,'
+  t.equal tabsToCommas(inv+''), ',,,,,,,,,'
+
+  t.end()
+
+test 'transferTo', (t) ->
+  inv = new Inventory()
+  inv.give new ItemPile('dirt', 200)
+  inv.take new ItemPile('dirt', 1)
+  t.equal tabsToCommas(inv+''), '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
+
+  inv2 = new Inventory()
+  inv.transferTo(inv2)
+
+  t.equal tabsToCommas(inv+''), ',,,,,,,,,'
+  t.equal tabsToCommas(inv2+''), '63:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
+
+  inv.give new ItemPile('diamond', 1)
+  inv2.give new ItemPile('gold', 1)
+
+  t.equal tabsToCommas(inv+''), '1:diamond,,,,,,,,,'
+  t.equal tabsToCommas(inv2+''), '63:dirt,64:dirt,64:dirt,8:dirt,1:gold,,,,,'
+
 
   t.end()
 
