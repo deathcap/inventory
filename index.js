@@ -46,6 +46,9 @@
         if (this.array[i] == null) {
           this.array[i] = new ItemPile(itemPile.item, 0);
           excess = this.array[i].mergePile(itemPile);
+          if (this.array[i].count === 0) {
+            this.array[i] = void 0;
+          }
         }
         if (itemPile.count === 0) {
           break;

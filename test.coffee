@@ -71,6 +71,17 @@ test 'give large', (t) ->
   t.equal tabsToCommas(inv+''), '64:dirt,64:dirt,64:dirt,8:dirt,,,,,,'
   t.end()
 
+test 'give fill partial', (t) ->
+  inv = new Inventory()
+
+  inv.array[1] = new ItemPile('dirt', 9)
+  t.equal tabsToCommas(inv+''), ',9:dirt,,,,,,,,'
+
+  inv.give new ItemPile('dirt', 1)
+  t.equal tabsToCommas(inv+''), ',10:dirt,,,,,,,,'
+  t.end()
+
+
 test 'take', (t) ->
   inv = new Inventory()
 

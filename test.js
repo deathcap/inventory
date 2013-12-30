@@ -55,6 +55,16 @@
     return t.end();
   });
 
+  test('give fill partial', function(t) {
+    var inv;
+    inv = new Inventory();
+    inv.array[1] = new ItemPile('dirt', 9);
+    t.equal(tabsToCommas(inv + ''), ',9:dirt,,,,,,,,');
+    inv.give(new ItemPile('dirt', 1));
+    t.equal(tabsToCommas(inv + ''), ',10:dirt,,,,,,,,');
+    return t.end();
+  });
+
   test('take', function(t) {
     var inv;
     inv = new Inventory();
