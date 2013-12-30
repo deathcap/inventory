@@ -44,7 +44,8 @@
       }
       for (i = _j = 0, _ref1 = this.array.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
         if (this.array[i] == null) {
-          this.array[i] = new ItemPile(itemPile.item, 0);
+          this.array[i] = itemPile.clone();
+          this.array[i].count = 0;
           excess = this.array[i].mergePile(itemPile);
           if (this.array[i].count === 0) {
             this.array[i] = void 0;

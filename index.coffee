@@ -27,7 +27,10 @@ class Inventory extends EventEmitter
     # then if we have to, add to empty slots
     for i in [0...@array.length]
       if not @array[i]?
-        @array[i] = new ItemPile(itemPile.item, 0) # TODO: improve hack
+        # start with an 'empty pile' to merge into TODO: improve this hack
+        @array[i] = itemPile.clone()
+        @array[i].count = 0
+
         excess = @array[i].mergePile(itemPile)
         @array[i] = undefined if @array[i].count == 0
       break if itemPile.count == 0
