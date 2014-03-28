@@ -21,6 +21,12 @@
       if (ySize == null) {
         ySize = 1;
       }
+      if (xSize <= 0) {
+        throw new Error("inventory invalid xSize: " + xSize);
+      }
+      if (ySize <= 0) {
+        throw new Error("inventory invalid xSize: " + ySize);
+      }
       size = xSize * ySize;
       this.array = new Array(size);
       this.width = xSize;

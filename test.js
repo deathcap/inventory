@@ -26,6 +26,24 @@
     t.equal(c.size(), 3 * 2);
     t.equal(c.width, 3);
     t.equal(c.height, 2);
+    t.throws(function() {
+      return new Inventory(1, 0);
+    });
+    t.throws(function() {
+      return new Inventory(0, 1);
+    });
+    t.throws(function() {
+      return new Inventory(0, 0);
+    });
+    t.throws(function() {
+      return new Inventory(1, -1);
+    });
+    t.throws(function() {
+      return new Inventory(-1, 1);
+    });
+    t.throws(function() {
+      return new Inventory(-1, -1);
+    });
     return t.end();
   });
 

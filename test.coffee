@@ -23,6 +23,13 @@ test 'size', (t) ->
   t.equal(c.width, 3)
   t.equal(c.height, 2)
 
+  t.throws () -> new Inventory(1, 0)
+  t.throws () -> new Inventory(0, 1)
+  t.throws () -> new Inventory(0, 0)
+  t.throws () -> new Inventory(1, -1)
+  t.throws () -> new Inventory(-1, 1)
+  t.throws () -> new Inventory(-1, -1)
+
   t.end()
 
 test 'give', (t) ->

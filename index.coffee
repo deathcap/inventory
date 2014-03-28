@@ -7,6 +7,8 @@ EventEmitter = (require 'events').EventEmitter
 module.exports =
 class Inventory extends EventEmitter
   constructor: (xSize=10, ySize=1, opts) ->
+    throw new Error("inventory invalid xSize: #{xSize}") if xSize <= 0
+    throw new Error("inventory invalid xSize: #{ySize}") if ySize <= 0
     size = xSize * ySize
     @array = new Array(size)
     @width = xSize
