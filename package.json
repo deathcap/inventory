@@ -17,8 +17,8 @@
     "inventory"
   ],
   "dependencies": {
-    "itempile": "~0.2.1",
-    "deep-equal": "~0.1.0",
+    "itempile": "^0.2.3",
+    "deep-equal": "^0.2.1",
     "coffeeify": "^0.6.0"
   },
   "devDependencies": {
