@@ -88,6 +88,12 @@ test 'give fill partial', (t) ->
   t.equal tabsToCommas(inv+''), ',10:dirt,,,,,,,,'
   t.end()
 
+test 'give infinite', (t) ->
+  inv = new Inventory()
+
+  inv.give new ItemPile('love', Infinity)
+  t.equal tabsToCommas(inv+''), 'Infinity:love,,,,,,,,,'
+  t.end()
 
 test 'take', (t) ->
   inv = new Inventory()
