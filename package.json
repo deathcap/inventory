@@ -2,6 +2,7 @@
   "name": "inventory",
   "description": "item inventory management",
   "version": "0.1.2",
+  "main": "inventory.coffee",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/inventory.git"
@@ -17,13 +18,19 @@
   ],
   "dependencies": {
     "itempile": "~0.2.1",
-    "deep-equal": "~0.1.0"
+    "deep-equal": "~0.1.0",
+    "coffeeify": "^0.6.0"
   },
   "devDependencies": {
     "tape": "2.3.0"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "browserify test.coffee | node"
+  },
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
   },
   "license": "MIT"
 }
