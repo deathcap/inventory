@@ -17,11 +17,12 @@
     "inventory"
   ],
   "dependencies": {
-    "itempile": "^0.2.3",
-    "deep-equal": "^0.2.1",
-    "coffeeify": "^0.6.0"
+    "itempile": "^1.0.1",
+    "deep-equal": "^1.0.0",
+    "coffeeify": "^1.0.0"
   },
   "devDependencies": {
+    "browserify": "^9.0.3",
     "tape": "2.3.0"
   },
   "scripts": {
