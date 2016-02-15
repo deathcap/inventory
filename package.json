@@ -21,12 +21,15 @@
     "deep-equal": "^1.0.0",
     "coffeeify": "^1.0.0"
   },
+  "engines": [
+    "node >=4"
+  ],
   "devDependencies": {
     "browserify": "^13.0.0",
     "tape": "^4.4.0"
   },
   "scripts": {
-    "test": "browserify test.coffee | node"
+    "test": "node test.js"
   },
   "browserify": {
     "transform": [
