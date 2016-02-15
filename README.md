@@ -4,6 +4,8 @@ Simple finite stackable item inventories (for games).
 
 [![Build Status](https://travis-ci.org/deathcap/inventory.png)](https://travis-ci.org/deathcap/inventory)
 
+Requires a ES6-compatible environment (tested on Node v4.2.4)
+
 ## Creation
 
 A new inventory can be created given its desired size (number of slots):
