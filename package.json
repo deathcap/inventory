@@ -29,7 +29,7 @@
     "tape": "^4.4.0"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "browserify test.js | node"
   },
   "browserify": {
     "transform": [
